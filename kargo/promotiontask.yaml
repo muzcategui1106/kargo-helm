@@ -8,21 +8,21 @@ spec:
   - name: image
     value: ghcr.io/akuity/guestbook
   - name: repoURL
-    value: https://github.com/akuity/kargo-helm.git
-  - name: branch
-    value: main
+    value: https://github.com/muzcategui1106/kargo-helm
   - name: envPath
   - name: argocdApp
 
   steps:
   - uses: git-clone
     config:
-      repoURL: ${{ vars.repoURL }}
+      repoURL: "${{ vars.repoURL }}"
       checkout:
-      - commit: ${{ commitFrom( vars.repoURL ).ID }}
+      - commit: "${{ commitFrom( vars.repoURL ).ID }}"
         path: ./src
-      - branch: ${{ vars.branch }}
+      - branch: stage/${{ ctx.stage }}
+        create: true
         path: ./out
+
   - uses: yaml-update
     as: update-image
     config:
