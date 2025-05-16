@@ -19,8 +19,5 @@ spec:
   subscriptions:
   - git:
       branch: main
-      commitSelectionStrategy: NewestFromBranch
       discoveryLimit: 20
       repoURL: https://github.com/muzcategui1106/kargo-helm.git
-      includePaths:
-      - base/feature-flags.yaml

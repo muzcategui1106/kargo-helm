@@ -26,14 +26,14 @@ spec:
   - uses: yaml-update
     as: update-image
     config:
-      path: ./out/${{ vars.envPath }}/values.yaml
+      path: ./src/${{ vars.envPath }}/values.yaml
       updates:
       - key: image.tag
         value: ${{ imageFrom( vars.image ).Tag }}
   - uses: copy
     config:
-      inPath: ./src/base/feature-flags.yaml
-      outPath: ./out/${{ vars.envPath }}/feature-flags.yaml
+      inPath: ./src/
+      outPath: ./out/
   - uses: git-commit
     as: commit
     config:
