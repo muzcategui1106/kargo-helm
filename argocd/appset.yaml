@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kargo-helm
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/muzcategui1106/kargo-helm.git
+      revision: HEAD
+      directories:
+      - path: env/*
+  template:
+    metadata:
+      name: kargo-helm-{{path.basename}}
+      annotations:
+        kargo.akuity.io/authorized-stage: kargo-helm:{{path.basename}}
+    spec:
+      destination:
+        namespace: kargo-helm-{{path.basename}}
+        server: https://kubernetes.default.svc
+      project: kargo-helm
+      source:
+        targetRevision: stage/{{path.basename}}
+        path: charts/guestbook
+        repoURL: https://github.com/muzcategui1106/kargo-helm.git
+        helm:
+          valueFiles:
+          - "/env/{{path.basename}}/values.yaml"
+          - "/env/{{path.basename}}/feature-flags.yaml"
